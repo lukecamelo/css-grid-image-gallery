@@ -29,7 +29,7 @@
     body {
       padding: 50px;
       font-family: sans-serif;
-      background: linear-gradient(to right, #F93D66, #6D47D9);
+      background: linear-gradient(to right, #fbe4c9, #84b9ef);
     }
 
     h1,
@@ -47,7 +47,7 @@
 
     .close {
       background: none;
-      color: white;
+      color: black;
       border: 0;
     }
 
@@ -131,9 +131,11 @@
 
     .overlay.open {
       display: grid;
+      align-items: center;
+      justify-items: center;
     }
 
-    .overlay figure {
+    .overlay-inner {
       background: white;
       width: 700px;
       padding: 20px;
@@ -165,6 +167,20 @@
       return Math.floor(Math.random() * limit) + 1;
     }
 
+    function handleClick(e) {
+      const src = e.currentTarget.querySelector('img').src;
+      overlayImage.src = src;
+      open();
+    }
+
+    function open() {
+      overlay.classList.add('open');
+    }
+
+    function close() {
+      overlay.classList.remove('open');
+    }
+
     const digits = Array.from({ length: 50},
      () => [randomNumber(4), randomNumber(4)])
      .concat([[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],
@@ -174,6 +190,13 @@
     
     const html = digits.map(generateHTML).join('');
     gallery.innerHTML = html;
+    
+    const items = document.querySelectorAll('.item');
+
+    items.forEach(item => item.addEventListener('click',
+      handleClick));
+
+      overlayClose.addEventListener('click', close);
   </script>
 </body>
 
